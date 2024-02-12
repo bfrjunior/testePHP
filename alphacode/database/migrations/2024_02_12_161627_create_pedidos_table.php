@@ -16,9 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('type');
-            $table->boolean('paid');
+            $table->enum('paid', ['Em Aberto', 'Pago', 'Cancelado'])->default('Em Aberto');
             $table->decimal('value', 10, 2);
             $table->datetime('payment_date')->nullable();
+            $table->dateTime('cancel_date')->nullable();;
             $table->timestamps();
         });
     }

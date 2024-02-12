@@ -20,10 +20,12 @@ class PedidoFactory extends Factory
         $paid = $this->faker->boolean();
         return [
           'user_id' => User::all()->random()->id,
-          'type' => $this->faker->randomElement(['A', 'P', 'C']),
-          'paid' => $paid,
+          'type' => $this->faker->randomElement(['C', 'B', 'P']),
+          'paid' => $this->faker->randomElement(['Em aberto', 'Pago', 'Cancelado']),
           'value' => $this->faker->numberBetween(1000, 10000),
-          'payment_date' => $paid ? $this->faker->randomElement([$this->faker->dateTimeThisMonth()]) : NULL
+          //'payment_date' => $paid ? $this->faker->randomElement([$this->faker->dateTimeThisMonth()]) : NULL
+          'payment_date' => $this->faker->dateTimeThisMonth(),
+          'cancel_date' => $this->faker->dateTimeThisMonth(),
         ];
     }
 }
