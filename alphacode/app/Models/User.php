@@ -17,6 +17,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+     public function produtos()
+     {
+         return $this->hasMany(Produto::class);
+     }
+
+
     protected $fillable = [
         'name',
         'email',

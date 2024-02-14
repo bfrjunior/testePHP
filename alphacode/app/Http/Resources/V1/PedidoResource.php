@@ -26,12 +26,12 @@ class PedidoResource extends JsonResource
             'fullName' => $this->user->firstName . ' ' . $this->user->lastName,
             'email' => $this->user->email,
           ],
+
           'type' => $this->types[$this->type],
-      'value' => 'R$ ' . number_format($this->value, 2, ',', '.'),
-      //'paid' => $paid ? 'Pago' : 'Em Aberto',
-          'paid' => $paid,
+          'value' => 'R$ ' . number_format($this->value, 2, ',', '.'),
+          'payment' => $paid,
           'paymentDate' => $paid ? Carbon::parse($this->payment_date)->format('d/m/Y H:i:s') : Null,
-          'paymentSince' => $paid ? Carbon::parse($this->payment_date)->diffForHumans() : Null
+          'paymentSince' => $paid ? Carbon::parse($this->payment_date)->diffForHumans() : Null ,
         ];
     }
 }

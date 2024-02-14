@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PedidoResource;
-use App\Models\Pedido;
-use App\Models\User;
+use App\Http\Resources\V1\ProdutoResource;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 
-class PedidoController extends Controller
+class ProdutoController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return PedidoResource::collection((Pedido::with('user')->get()));
+        return ProdutoResource::collection((Produto::with('user')->get()));
     }
 
     /**
@@ -39,7 +39,7 @@ class PedidoController extends Controller
      */
     public function show(string $id)
     {
-        return new PedidoResource(Pedido::where('id',$id)->first());
+        return new ProdutoResource(Produto::where('id',$id)->first());
     }
 
     /**
