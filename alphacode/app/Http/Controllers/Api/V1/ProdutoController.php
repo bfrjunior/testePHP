@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\PedidoResource;
+use App\Http\Resources\V1\PedidoResource;   
 use App\Http\Resources\V1\ProdutoResource;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Produto;
 use Illuminate\Http\Request;
 
@@ -31,7 +32,7 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

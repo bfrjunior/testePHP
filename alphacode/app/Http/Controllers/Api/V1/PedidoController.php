@@ -7,6 +7,7 @@ use App\Http\Resources\V1\PedidoResource;
 use App\Models\Pedido;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PedidoController extends Controller
 {
@@ -31,7 +32,17 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'type' => 'required|max:1',
+            'paid' => 'required|in:Em Aberto,Pago,Cancelado',
+            'payment_date' => 'nullable',
+            'value' => 'required|numeric|between:1,9999.99'
+          ]);
+      
+          if ($validator->fails()) {
+            return $this->error('Data Invalid', 422, $validator->errors());
+          }
     }
 
     /**

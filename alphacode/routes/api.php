@@ -16,9 +16,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::get('/pedidos', [PedidoController::class, 'index']);
     Route::get('/pedidos/{pedido}', [PedidoController::class, 'show']);
+    Route::post('/pedidos', [PedidoController::class, 'store']);
+
 
     Route::get('/produtos', [ProdutoController::class, 'index']);
     Route::get('/produtos/{produto}', [ProdutoController::class, 'show']);
-    Route::post('/produtos', [ProdutoController::class, 'store']);
+    
 
 });
