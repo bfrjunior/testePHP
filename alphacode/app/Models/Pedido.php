@@ -32,25 +32,16 @@ class Pedido extends Model
     }
 
     public function filter(Request $request)
-  {
-    $queryFilter = (new PedidoFilter)->filter($request);
-
-    if (empty($queryFilter)) {
-      return PedidoResource::collection(Pedido::with('user')->get());
+    {
+        $queryFilter = (new PedidoFilter)->filter($request);
+    
+        $pedidos = Pedido::with('user');
+    
+        foreach ($queryFilter as $filter) {
+            $pedidos->where(...$filter);
+        }
+    
+        return PedidoResource::collection($pedidos->get());
     }
-
-    $data = Pedido::with('user');
-
-    if (!empty($queryFilter['whereIn'])) {
-      var_dump($queryFilter['whereIn']);
-      // foreach ($queryFilter['whereIn'] as $value) {
-      //   $data->whereIn($value[0], $value[1]);
-      // }
-    }
-
-    // $resource = $data->where($queryFilter['where'])->get();
-
-    // return InvoiceResource::collection($resource);
-  }
 
 }
