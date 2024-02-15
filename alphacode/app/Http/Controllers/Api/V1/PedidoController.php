@@ -17,9 +17,10 @@ class PedidoController extends Controller
      */
 
      use HttpResponses;
-    public function index()
+    public function index(Request $request)
     {
-        return PedidoResource::collection((Pedido::with('user')->get()));
+        //return PedidoResource::collection((Pedido::with('user')->get()));
+        return (new Pedido())->filter($request);
     }
 
     /**
