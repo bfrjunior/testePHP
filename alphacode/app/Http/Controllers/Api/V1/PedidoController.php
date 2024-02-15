@@ -58,9 +58,9 @@ class PedidoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Pedido $pedido)
     {
-        return new PedidoResource(Pedido::where('id',$id)->first());
+        return new PedidoResource($pedido);
     }
 
     /**
@@ -74,16 +74,47 @@ class PedidoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Pedido $pedido)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'type' => 'required|max:1|in:' . implode(',', ['B', 'C', 'P']),
+            'paid' => 'required|in:Em Aberto,Pago,Cancelado',
+            'value' => 'required|numeric|between:1,9999.99',
+            'payment_date' => 'nullable|date_format:Y-m-d H:i:s'
+          ]);
+
+          if ($validator->fails()) {
+            return $this->error('Validation failed', 422, $validator->errors());
+          }
+          $validated = $validator->validated();
+      
+          $updated = $pedido->update([
+            'user_id' => $validated['user_id'],
+            'type' => $validated['type'],
+            'paid' => $validated['paid'],
+            'value' => $validated['value'],
+            'payment_date' => in_array($validated['paid'], ['Em Aberto', 'Pago', 'Cancelado']) ? $validated['payment_date'] : null,
+
+          ]);
+
+          if ($updated) {
+            return $this->response('Invoice updated', 200, new PedidoResource($pedido->load('user')));
+          }
+      
+          return $this->error('Invoice not updated', 400);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Pedido $pedido)
     {
-        //
+        $deleted = $pedido->delete();
+
+        if ($deleted) {
+          return $this->response('Invoice deleted', 200);
+        }
+        return $this->error('Invoice not deleted', 400);
     }
 }
