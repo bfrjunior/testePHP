@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PedidoResource;
 use App\Models\Pedido;
 use App\Models\User;
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,6 +15,8 @@ class PedidoController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+     use HttpResponses;
     public function index()
     {
         return PedidoResource::collection((Pedido::with('user')->get()));
@@ -43,6 +46,13 @@ class PedidoController extends Controller
           if ($validator->fails()) {
             return $this->error('Data Invalid', 422, $validator->errors());
           }
+          $created = Pedido::create($validator->validated());
+
+    if ($created) {
+      return $this->response('Invoice created', 200, new PedidoResource($created->load('user')));
+    }
+
+    return $this->error('Invoice not created', 400);
     }
 
     /**
