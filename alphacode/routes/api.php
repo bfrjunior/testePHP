@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function () {
     
     //USERS/CLIENTES
     Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
     
     //PEDIDOS
     Route::get('/pedidos', [PedidoController::class, 'index']);
