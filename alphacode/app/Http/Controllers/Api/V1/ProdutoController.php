@@ -7,6 +7,7 @@ use App\Http\Resources\V1\PedidoResource;
 use App\Http\Resources\V1\ProdutoResource;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Produto;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -81,46 +82,45 @@ class ProdutoController extends Controller
     public function update(Request $request,Produto $produto)
     {
         
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required',
-            'descricao' => 'required',
-            'valor_unitario' => 'required',
-            'desconto' => 'required',
-            'quantidade'=>'required'
-       
-          ]);
+      $validator = Validator::make($request->all(), [
+        'user_id' => 'required',
+        'descricao' => 'required',
+        'valor_unitario' => 'required',
+        'desconto' => 'required',
+        'quantidade' => 'required',
+    ]);
 
-          if ($validator->fails()) {
-            return $this->error('Validation failed', 422, $validator->errors());
-          }
-          $validated = $validator->validated();
-      
-          $updated = $produto->update([
-            'user_id' => $validated['user_id'],
-            'descricao' => $validated['descricao'],
-            'valor_unitario' => $validated['valor_unitario'],
-            'desconto' => $validated['desconto'],
-            'quantidade' => $validated['quantidade'],
-
-          ]);
-
-          if ($updated) {
-            return $this->response('Product updated', 200, new ProdutoResource($produto->load('user')));
-          }
-      
-          return $this->error('Product not updated', 400);
+    if ($validator->fails()) {
+        return response()->json(['message' => 'Validation failed', 'errors' => $validator->errors()], 422);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Produto $produto)
+    $validated = $validator->validated();
+
+    $produto->update([
+        'user_id' => $validated['user_id'],
+        'descricao' => $validated['descricao'],
+        'valor_unitario' => $validated['valor_unitario'],
+        'desconto' => $validated['desconto'],
+        'quantidade' => $validated['quantidade'],
+    ]);
+
+    return new ProdutoResource($produto);
+  }
+
+  public function destroy(Request $request, $id)
     {
-        $deleted = $produto->delete();
-
-        if ($deleted) {
-          return $this->response('Product deleted', 200);
+        try {
+            $user = User::findOrFail($id);
+    
+            // Exclui os pedidos associados ao usuário
+            $user->pedidos()->delete();
+            $user->produtos()->delete();
+            // Exclui o usuário
+            $user->delete();
+    
+            return response()->json(['message' => 'produto excluído com sucesso'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao excluir produto: ' . $e->getMessage()], 500);
         }
-        return $this->error('Product not deleted', 400);
-    }
+}
 }

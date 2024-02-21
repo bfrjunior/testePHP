@@ -15,13 +15,15 @@
                     <th>Status</th>
                      <th>Data</th>
                      <th>Pagamento Desde</th>
+                
                   
                 </tr>
             </thead>
+            @if(isset($data) && count($data) > 0)
             <tbody>
                 @foreach($data as $item)
                     <tr>
-
+                    
                     <td>{{ $item['user']['fullName'] }}</td>
                     <td>{{ $item['user']['email'] }}</td>
                     <td>{{ $item['type'] }}</td>
@@ -30,14 +32,20 @@
                     <td>{{ $item['paymentDate'] }}</td>
                     <td>{{ $item['paymentSince'] }}</td>
 
-                        <td>
-                            <a href="#" class="btn btn-primary">Editar</a>
-                            <a href="#" class="btn btn-danger">Excluir</a>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        @if($currentPage > 1)
+        <a href="{{ route('pedidos.index', ['page' => $currentPage - 1]) }}">Página Anterior</a>
+    @endif
+
+    @if($currentPage < $lastPage)
+        <a href="{{ route('pedidos.index', ['page' => $currentPage + 1]) }}">Próxima Página</a>
+    @endif
+@else
+    <p>Nenhum cliente encontrado.</p>
+@endif
     </div>
 </body>
 </html>

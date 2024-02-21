@@ -16,7 +16,14 @@ class PedidoController extends Controller
 
         if ($response->ok()) {
             $data = $response->json()['data'];
-            return view('pedidos', ['data' => $data]);
+            $perPage = 20; // Número de itens por página
+            $totalItems = count($data);
+            $currentPage = request()->query('page', 1);
+            $lastPage = ceil($totalItems / $perPage);
+            $offset = ($currentPage - 1) * $perPage;
+            $data = array_slice($data, $offset, $perPage);
+        
+            return view('pedidos', ['data' => $data, 'currentPage' => $currentPage, 'lastPage' => $lastPage]);
         } else {
             return response()->json(['error' => 'Failed to fetch data from API'], $response->status());
         }
@@ -51,7 +58,14 @@ class PedidoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $response = Http::get("http://localhost:8000/api/v1/pedidos/{$id}");
+
+    if ($response->ok()) {
+        $cliente = $response->json()['data'];
+        return view('pedidoForm', compact('pedido'));
+    } else {
+        return response()->json(['error' => 'Failed to fetch client data from API'], $response->status());
+    }
     }
 
     /**

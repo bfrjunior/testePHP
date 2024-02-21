@@ -44,6 +44,11 @@
     margin-right: 5px;
 }
 
+svg {
+    display: none;
+}
+
+
 /* Media query para tornar a navegação responsiva */
 @media only screen and (max-width: 768px) {
     .navbar {

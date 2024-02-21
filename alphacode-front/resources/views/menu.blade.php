@@ -9,8 +9,9 @@
 </head>
 
 <div class="navbar">
-    <a href="http://127.0.0.1:8001/" class="navbar-btn">Home</a>
+    <a href="http://127.0.0.1:8001/home" class="navbar-btn">Home</a>
     <a href="http://127.0.0.1:8001/clientes" class="navbar-btn">Clientes</a>
     <a href="http://127.0.0.1:8001/pedidos" class="navbar-btn">Pedidos</a>
     <a href="http://127.0.0.1:8001/produtos" class="navbar-btn">Produtos</a>
+ 
 </div>

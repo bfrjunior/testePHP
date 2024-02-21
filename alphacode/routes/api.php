@@ -16,14 +16,14 @@ Route::prefix('v1')->group(function () {
     
     Route::post('/login', [AuthController::class, 'login']);
     Route::middleware('auth:sanctum')->group(function () { 
-       
+        Route::get('/teste', [TesteController::class, 'index']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 
     });
 
     //sanctun
-    Route::get('/teste', [TesteController::class, 'index']);
-    Route::get('/users/{user}', [UserController::class, 'show']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+   
     //sanctun
     
     //USERS/CLIENTES

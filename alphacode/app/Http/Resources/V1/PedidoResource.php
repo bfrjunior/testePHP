@@ -21,12 +21,13 @@ class PedidoResource extends JsonResource
         $paid = $this->paid;
     return [
         'user' => [
+            
             'firstName' => $this->user->firstName,
             'lastName' => $this->user->lastName,
             'fullName' => $this->user->firstName . ' ' . $this->user->lastName,
             'email' => $this->user->email,
           ],
-
+          'user_id' => $this->user_id,
           'type' => $this->types[$this->type],
           'value' => 'R$ ' . number_format($this->value, 2, ',', '.'),
           'payment' => $paid,

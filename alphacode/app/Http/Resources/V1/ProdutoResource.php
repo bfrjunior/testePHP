@@ -17,11 +17,13 @@ class ProdutoResource extends JsonResource
         return[
             
             'user' => [
+                'user_id'=>$this->user->id,
                 'firstName' => $this->user->firstName,
                 'lastName' => $this->user->lastName,
                 'fullName' => $this->user->firstName . ' ' . $this->user->lastName,
                 'email' => $this->user->email,
               ],
+              'id'=> $this->id,
             'descricao' => $this->descricao,
             'valor_unitario' => 'R$ ' . number_format($this->valor_unitario, 2, ',', '.'),
             'desconto' => $this->desconto . '%',
