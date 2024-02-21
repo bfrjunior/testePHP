@@ -23,9 +23,19 @@ class User extends Authenticatable
          return $this->hasMany(Produto::class);
      }
 
+     public function pedidos()
+     {
+         return $this->hasMany(Pedido::class);
+     }
+
 
     protected $fillable = [
+        
         'name',
+        'email',
+        'id',
+        'firstName',
+        'lastName',
         'email',
         'password',
     ];

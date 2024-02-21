@@ -16,16 +16,23 @@ Route::prefix('v1')->group(function () {
     
     Route::post('/login', [AuthController::class, 'login']);
     Route::middleware('auth:sanctum')->group(function () { 
-        Route::get('/teste', [TesteController::class, 'index']);
-        Route::get('/users/{user}', [UserController::class, 'show']);
-        Route::post('/logout', [AuthController::class, 'logout']);
+       
 
     });
 
+    //sanctun
+    Route::get('/teste', [TesteController::class, 'index']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    //sanctun
     
     //USERS/CLIENTES
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
+
     
     //PEDIDOS
     Route::get('/pedidos', [PedidoController::class, 'index']);
@@ -37,6 +44,10 @@ Route::prefix('v1')->group(function () {
     //PRODUTOS
     Route::get('/produtos', [ProdutoController::class, 'index']);
     Route::get('/produtos/{produto}', [ProdutoController::class, 'show']);
+    Route::post('/produtos', [ProdutoController::class, 'store']);
+    Route::put('/produtos/{produto}', [ProdutoController::class, 'update']);
+    Route::delete('/produtos/{produto}', [ProdutoController::class, 'destroy']);
+
     
 
 });
