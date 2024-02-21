@@ -1,58 +1,82 @@
-[![](https://site.alphacode.com.br/wp-content/uploads/2015/10/logocolor.png)](https://site.alphacode.com.br/)
+# Teste php -1
 
-# Nossa empresa
 
-Nascida em 2015, a Alphacode é uma empresa que não para de crescer e de inovar.
-Formada por um time experiente de especialistas em tecnologia a empresa busca a cada dia trazer as soluções mais inovadoras do mercado mobile para os seus clientes.
-Todos os meses são novos aplicativos publicados nas lojas Play Store e Apple Store e um número maior de pessoas que utilizam nossas soluções para melhorar seu dia a dia.
-Seja para pedir uma pizza, assistir tv,  abrir o portão de casa ou pagar a conta de um churrasco com os amigos você pode estar usando um aplicativo criado por nós.
-E é com esse espirito inovador que a Alphacode vem se tornando referência no mercado mobile nacional.
+## 💻 Pré-requisitos
 
-## Conheça mais sobre a Alphacode
+-Laravel
+-php 8
+-docker
+-insomnia
 
-https://site.alphacode.com.br/
+## 🚀 Instalando <Teste php 1>
 
-https://www.linkedin.com/company/alphacodeit/
+Para instalar o <Teste php 1>, siga estas etapas:
 
-# Descrição da vaga
+primeiro edite o arquivo .env
 
-Buscamos profissionais que sejam apaixonados por desenvolvimento, inovação e novas tecnologias, para integrar nosso time em projetos baseados em PHP, Ionic, Angular.
+DB_DATABASE=testephp
+DB_USERNAME=root
+DB_PASSWORD=root
 
-## Requisitos
+Docker:Criando o banco de dados
+```
+docker composer -up
+```
 
-### **Obrigatórios:**
+Agora execute as migrations e os seeders
+```
+php artisan migrate:fresh --seed
+```
 
-- Mínimo 2 ano de experiência em desenvolvimento de sites e sistemas em PHP;
-- Desenvolvimento de APIs RESTful;
-- Conhecimentos em SQL e NoSQL;
-- Controle de versões (GIT).
+Temos dois diretorios
+Alphacode é onde esta a API.
+ inicie o servidor:
+```
+php artisan serve
+```
 
-### **Diferenciais:**
+Alphacode-front onde esta a aplicação.
+ inicie:
+```
+php artisan serve --port=8001
+```
+## ☕ Usando <Teste php 1>
 
-- TDD;
-- Conhecimentos em Ionic;
-- Conhecimentos em serviços AWS;
-- Conhecimentos em Node.JS;
-- Experiência em metodologias ágeis (Scrum/Kanban).
+Para usar <Teste php 1>, siga estas etapas:
 
-## Benefícios
+End points:Todas as rotas retornan Json 
+Login:
+Todos os logins cadastrados possuem a mesma senha: password
+```
+http://127.0.0.1:8000/api/v1/login
+```
+passe o json abaixo:
+Precisa efetuar o login por conta da autenticação.
+```
+{
+        "email":"exemplo@example.org",
+		"password":"password"
+}
+```
+Rota de Pedidos
+```
+http://127.0.0.1:8000/api/v1/pedidos/3
+```
+```
+{
+   "user_id": "3",
+    "type": "B",
+    "paid": "Pago",
+	"value": "1000",
+	"payment_date": "2024-01-30 12:40:20"
+}
 
-- Salário compatível com o mercado;
-- Vale Refeição;
-- Seguro de Vida;
-- Equipe unida, e divertida;
+```
+Esse end point retorna o pedido do cliente como pago , em aberto ou cancelado ,possui tipo de pagamento , Boleto Pix ou Cartão
+![Resultado](images/updated.PNG)
 
-## Contratação
+Segue arquivo com todas as rotas(insomnia)
+[Rotas](images/Insomnia_2024-02-21.json)
 
-Regime: CLT
 
-## Alocação
 
-À definir
-
-## Como se candidatar
-
-Para se candidatar, basta acessar a url de acordo com o nível e realizar o teste para a vaga:
-
-- [Desenvolvedor PHP - Teste 1](teste-php-1.md)
-- [Desenvolvedor PHP - Teste 2](teste-php-2.md)
